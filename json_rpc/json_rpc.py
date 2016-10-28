@@ -20,7 +20,7 @@ json_rpc_errors = {
     '-32600': {'code': -32600, 'message': 'Invalid Request'},  # The JSON sent is not a valid Request object.
     '-32601': {'code': -32601, 'message': 'Method not found'},  # The method does not exist / is not available.
     '-32602': {'code': -32602, 'message': 'Invalid params'},  # Invalid method parameter(s).
-    '-32603': {'code': -32602, 'message': 'Internal error'},  # Internal JSON-RPC error.
+    '-32603': {'code': -32603, 'message': 'Internal error'},  # Internal JSON-RPC error.
     # -32000 to -32099 	Server error 	Reserved for implementation-defined server-errors.
 }
 
