@@ -73,8 +73,7 @@ class SslocalObject():
             '-k', password,
             '-l', str(local_port),
             '-p', str(server_port),
-        ], stdout=subprocess.PIPE)
-        print(self.process_object)
+        ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
 def get_port_list():
@@ -93,7 +92,7 @@ class SslocalManager():
         self.port_list = port_list or list(range(1080, 1100))
 
     def get_state(self):
-        print(self.active_process_list)
+        return [i.server_info for i in self.active_process_list]
 
     def open_connection(self, server_info, local_port_list):
         local_port = server_info.get('local_port')
@@ -109,6 +108,8 @@ class SslocalManager():
         idx = self.active_process_list.index(sslocal_object)
         self.active_process_list.pop(idx)
         sslocal_object.process_object.terminate()
+        print("======stdout======", sslocal_object.process_object.stdout.read())
+        print("======stderr======", sslocal_object.process_object.stderr.read())
 
     def remove_stoped_connection(self):
         stoped_process = [i for i in self.active_process_list if i.process_object.returncode is not None]
@@ -137,6 +138,14 @@ def main():
     sm = SslocalManager()
     sm.update(get_server_list(), get_port_list())
     sm.update(get_server_list(), get_port_list())
+
+    print("state", sm.get_state())
+
+    time.sleep(10)
+
+    sm.update([], get_port_list())
+    print("state", sm.get_state())
+
 
     while True:
         time.sleep(10)
