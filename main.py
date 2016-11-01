@@ -1,3 +1,5 @@
+from json_rpc.json_rpc_tools import run_json_rpc_server
+
 __author__ = 'pl'
 
 import time
@@ -146,9 +148,10 @@ def main():
     sm.update([], get_port_list())
     print("state", sm.get_state())
 
-
-    while True:
-        time.sleep(10)
+    run_json_rpc_server("127.0.0.1", 1079, {
+        "update": lambda a: sm.update(a.get('server_list'), a.get('port_list')),
+        "get_state": lambda a: sm.get_state(),
+    })
 
 if __name__ == '__main__':
     print(test_port(1083))
