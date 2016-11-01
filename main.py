@@ -1,12 +1,9 @@
 from json_rpc.json_rpc_tools import run_json_rpc_server
-
-__author__ = 'pl'
-
 import time
 import socket
 import subprocess
-from json_rpc import json_rpc
-from json_rpc import json_rpc_tools
+
+__author__ = 'pl'
 
 
 def f_id(x):
@@ -110,6 +107,7 @@ class SslocalManager():
         idx = self.active_process_list.index(sslocal_object)
         self.active_process_list.pop(idx)
         sslocal_object.process_object.terminate()
+        print("======server======", sslocal_object.server_info)
         print("======stdout======", sslocal_object.process_object.stdout.read())
         print("======stderr======", sslocal_object.process_object.stderr.read())
 
@@ -152,6 +150,7 @@ def main():
         "update": lambda a: sm.update(a.get('server_list'), a.get('port_list')),
         "get_state": lambda a: sm.get_state(),
     })
+
 
 if __name__ == '__main__':
     print(test_port(1083))
