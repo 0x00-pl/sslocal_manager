@@ -68,9 +68,10 @@ class SslocalObject():
     def open_sslocal(self, address, password, local_port, server_port=8388):
         self.process_object = subprocess.Popen([
             'sslocal',
-            '-s', address,
             '-k', password,
+            '-b', '0.0.0.0',
             '-l', str(local_port),
+            '-s', address,
             '-p', str(server_port),
         ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
@@ -143,7 +144,7 @@ def main():
 
     time.sleep(10)
 
-    sm.update([], get_port_list())
+    # sm.update([], get_port_list())
     print("state", sm.get_state())
 
     run_json_rpc_server("127.0.0.1", 1079, {
